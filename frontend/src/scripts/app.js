@@ -48,6 +48,11 @@ const elements = {
     uploadPanelUrl: document.getElementById('upload-panel-url'),
     urlInput: document.getElementById('url-input'),
     fetchUrlBtn: document.getElementById('fetch-url-btn'),
+    // Navigation elements
+    navLinks: document.querySelectorAll('.nav-link'),
+    uploadSection: document.getElementById('upload-section'),
+    docsSection: document.getElementById('docs-section'),
+    aboutSection: document.getElementById('about-section'),
 };
 
 // Utility Functions
@@ -195,6 +200,44 @@ function switchUploadTab(tab) {
     // Show/hide panels
     elements.uploadPanelFile.hidden = tab !== 'file';
     elements.uploadPanelUrl.hidden = tab !== 'url';
+}
+
+// Page navigation
+function navigateToPage(page) {
+    // Update nav link styles
+    elements.navLinks.forEach(link => {
+        link.classList.toggle('active', link.dataset.page === page);
+    });
+    
+    // Define which sections belong to which page
+    const convertSections = [
+        elements.uploadSection,
+        elements.previewSection,
+        elements.optionsSection,
+        elements.resultsSection,
+    ];
+    
+    // Hide all pages first
+    convertSections.forEach(section => {
+        if (section) section.hidden = true;
+    });
+    elements.docsSection.hidden = true;
+    elements.aboutSection.hidden = true;
+    
+    // Show the relevant page
+    if (page === 'convert') {
+        // Show convert sections (restore previous state)
+        elements.uploadSection.hidden = false;
+        // Only show these if they were previously visible (have content)
+        if (state.currentFile) {
+            elements.previewSection.hidden = false;
+            elements.optionsSection.hidden = false;
+        }
+    } else if (page === 'docs') {
+        elements.docsSection.hidden = false;
+    } else if (page === 'about') {
+        elements.aboutSection.hidden = false;
+    }
 }
 
 function renderFileList() {
@@ -371,6 +414,14 @@ function resetApp() {
 
 // Event Listeners
 function initEventListeners() {
+    // Navigation links
+    elements.navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            navigateToPage(link.dataset.page);
+        });
+    });
+    
     // Upload zone click
     elements.uploadZone.addEventListener('click', () => {
         elements.fileInput.click();

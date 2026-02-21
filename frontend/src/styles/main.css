@@ -689,3 +689,217 @@ body {
 [hidden] {
     display: none !important;
 }
+
+/* Documentation Section */
+.docs-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.docs-container h2 {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+    color: var(--color-gray-800);
+}
+
+.docs-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.docs-card {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xl);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--color-gray-200);
+}
+
+.docs-card h3 {
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-md);
+    font-size: 1.25rem;
+}
+
+.docs-card h4 {
+    color: var(--color-gray-700);
+    margin: var(--spacing-lg) 0 var(--spacing-sm);
+    font-size: 1rem;
+}
+
+.docs-card ul {
+    list-style: none;
+    padding: 0;
+}
+
+.docs-card li {
+    padding: var(--spacing-sm) 0;
+    padding-left: var(--spacing-lg);
+    position: relative;
+    color: var(--color-gray-600);
+}
+
+.docs-card li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: var(--color-primary);
+}
+
+.docs-card code {
+    background: var(--color-gray-100);
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    color: var(--color-gray-700);
+}
+
+.docs-note {
+    margin-top: var(--spacing-md);
+    padding: var(--spacing-md);
+    background: rgba(245, 158, 11, 0.1);
+    border-left: 3px solid var(--color-warning);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    color: var(--color-gray-700);
+    font-size: 0.875rem;
+}
+
+/* About Section */
+.about-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.about-header {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+}
+
+.about-avatar {
+    width: 100px;
+    height: 100px;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto var(--spacing-lg);
+    color: white;
+}
+
+.about-header h2 {
+    color: var(--color-gray-800);
+}
+
+.about-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.about-card {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xl);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--color-gray-200);
+}
+
+.about-card h3 {
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-md);
+    font-size: 1.125rem;
+}
+
+.about-card p {
+    color: var(--color-gray-600);
+    line-height: 1.7;
+}
+
+.about-card ul {
+    list-style: none;
+    padding: 0;
+    margin-top: var(--spacing-md);
+}
+
+.about-card li {
+    padding: var(--spacing-xs) 0;
+    padding-left: var(--spacing-lg);
+    position: relative;
+    color: var(--color-gray-600);
+}
+
+.about-card li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--color-success);
+}
+
+.version-badge {
+    display: inline-block;
+    background: var(--color-gray-100);
+    color: var(--color-gray-600);
+    padding: 4px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    font-weight: 500;
+    margin-bottom: var(--spacing-md);
+}
+
+.creator-name {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-gray-800) !important;
+    margin-bottom: var(--spacing-sm) !important;
+}
+
+.tech-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-sm);
+}
+
+.tech-badge {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+    color: white;
+    padding: 6px 14px;
+    border-radius: var(--radius-md);
+    font-size: 0.8125rem;
+    font-weight: 500;
+}
+
+.github-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-md);
+    color: var(--color-gray-700);
+    text-decoration: none;
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: var(--color-gray-100);
+    border-radius: var(--radius-md);
+    transition: var(--transition-fast);
+}
+
+.github-link:hover {
+    background: var(--color-gray-200);
+    color: var(--color-gray-900);
+}
+
+.about-card.disclaimer {
+    background: var(--color-gray-50);
+    border: 1px dashed var(--color-gray-300);
+}
+
+.about-card.disclaimer h3 {
+    color: var(--color-gray-600);
+}
+
+.about-card.disclaimer p {
+    color: var(--color-gray-500);
+    font-size: 0.875rem;
+}
