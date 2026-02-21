@@ -2,10 +2,8 @@
  * Smart Notebook Print Formatter - Frontend Application
  */
 
-// API Configuration - use relative path for production
-const API_BASE = window.location.hostname === 'localhost' 
-    ? 'http://localhost:8000/api' 
-    : '/api';
+// API Configuration - use relative path for same-origin deployment
+const API_BASE = '/api';
 
 // State
 const state = {
