@@ -12,8 +12,9 @@ from contextlib import asynccontextmanager
 from .config import settings
 from .api.routes import router
 
-# Frontend path
-FRONTEND_PATH = Path(__file__).parent.parent.parent.parent / "frontend" / "src"
+# Frontend path: main.py is at backend/src/main.py
+# .parent = backend/src/, .parent.parent = backend/, .parent.parent.parent = project root
+FRONTEND_PATH = Path(__file__).parent.parent.parent / "frontend" / "src"
 
 
 @asynccontextmanager
