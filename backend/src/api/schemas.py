@@ -47,6 +47,12 @@ class BatchConvertRequest(BaseModel):
     options: ExportOptions = Field(default_factory=ExportOptions)
 
 
+class URLUploadRequest(BaseModel):
+    """Request to upload a notebook from URL."""
+    url: str
+    session_id: Optional[str] = None
+
+
 # Response Models
 
 class UploadResponse(BaseModel):

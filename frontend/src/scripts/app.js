@@ -42,6 +42,12 @@ const elements = {
     convertAnotherBtn: document.getElementById('convert-another-btn'),
     loadingOverlay: document.getElementById('loading-overlay'),
     loadingText: document.getElementById('loading-text'),
+    // URL upload elements
+    uploadTabs: document.querySelectorAll('.upload-tab'),
+    uploadPanelFile: document.getElementById('upload-panel-file'),
+    uploadPanelUrl: document.getElementById('upload-panel-url'),
+    urlInput: document.getElementById('url-input'),
+    fetchUrlBtn: document.getElementById('fetch-url-btn'),
 };
 
 // Utility Functions
@@ -122,6 +128,73 @@ async function handleFileSelect(file) {
         hideLoading();
         alert('Upload failed: ' + error.message);
     }
+}
+
+// URL Upload
+async function uploadFromUrl(url) {
+    const response = await fetch(`${API_BASE}/upload-url`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            url: url,
+            session_id: state.sessionId,
+        }),
+    });
+    
+    if (!response.ok) {
+        const error = await response.json().catch(() => ({}));
+        throw new Error(error.detail || 'Failed to fetch notebook from URL');
+    }
+    
+    return response.json();
+}
+
+async function handleUrlFetch() {
+    const url = elements.urlInput.value.trim();
+    
+    if (!url) {
+        alert('Please enter a notebook URL');
+        return;
+    }
+    
+    showLoading('Fetching notebook from URL...');
+    
+    try {
+        const result = await uploadFromUrl(url);
+        
+        state.sessionId = result.session_id;
+        state.uploadedFiles.push({
+            name: result.filename,
+            size: result.file_size,
+        });
+        state.currentFile = result.filename;
+        
+        // Clear URL input
+        elements.urlInput.value = '';
+        
+        renderFileList();
+        await loadPreview(result.filename);
+        
+        elements.optionsSection.hidden = false;
+        hideLoading();
+    } catch (error) {
+        hideLoading();
+        alert('Failed to fetch notebook: ' + error.message);
+    }
+}
+
+// Tab switching
+function switchUploadTab(tab) {
+    // Update tab styles
+    elements.uploadTabs.forEach(t => {
+        t.classList.toggle('active', t.dataset.tab === tab);
+    });
+    
+    // Show/hide panels
+    elements.uploadPanelFile.hidden = tab !== 'file';
+    elements.uploadPanelUrl.hidden = tab !== 'url';
 }
 
 function renderFileList() {
@@ -368,6 +441,23 @@ function initEventListeners() {
     
     // Convert another button
     elements.convertAnotherBtn.addEventListener('click', resetApp);
+    
+    // Upload tabs
+    elements.uploadTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            switchUploadTab(tab.dataset.tab);
+        });
+    });
+    
+    // URL fetch button
+    elements.fetchUrlBtn.addEventListener('click', handleUrlFetch);
+    
+    // URL input Enter key
+    elements.urlInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            handleUrlFetch();
+        }
+    });
 }
 
 // Make functions available globally

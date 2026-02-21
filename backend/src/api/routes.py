@@ -23,13 +23,14 @@ from .schemas import (
     NotebookPreview,
     CellPreview,
     GraphInfo,
+    URLUploadRequest,
 )
 from ..config import settings
 from ..parser import NotebookParser, PythonParser
 from ..graph_handler import GraphExtractor, GraphStorage, CaptionGenerator
 from ..formatter import TemplateEngine, CodeHighlighter, PageOptimizer
 from ..exporter import HTMLExporter, DOCXExporter
-from ..utils import FileHandler, NotebookValidator
+from ..utils import FileHandler, NotebookValidator, NotebookFetcher
 
 
 router = APIRouter()
@@ -37,6 +38,7 @@ router = APIRouter()
 # Initialize services
 file_handler = FileHandler()
 validator = NotebookValidator()
+notebook_fetcher = NotebookFetcher()
 notebook_parser = NotebookParser()
 python_parser = PythonParser()
 graph_extractor = GraphExtractor()
@@ -85,6 +87,50 @@ async def upload_file(
         filename=file_path.name,
         file_size=len(content),
         message="File uploaded successfully"
+    )
+
+
+@router.post("/upload-url", response_model=UploadResponse)
+async def upload_from_url(request: URLUploadRequest):
+    """
+    Upload a notebook from a URL (Google Colab, GitHub, etc.).
+    
+    Supported sources:
+    - Google Colab: colab.research.google.com/drive/FILE_ID
+    - GitHub: github.com/user/repo/blob/branch/path/to/notebook.ipynb
+    - GitHub Gists: gist.github.com/user/gist_id
+    - Direct .ipynb URLs
+    """
+    try:
+        # Fetch notebook from URL
+        content, filename = await notebook_fetcher.fetch(request.url)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    except Exception as e:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Failed to fetch notebook: {str(e)}"
+        )
+    
+    # Check file size
+    size_mb = len(content) / (1024 * 1024)
+    if size_mb > settings.MAX_FILE_SIZE_MB:
+        raise HTTPException(
+            status_code=413,
+            detail=f"Notebook too large. Max size: {settings.MAX_FILE_SIZE_MB}MB"
+        )
+    
+    # Save file
+    file_path, session_id = file_handler.save_upload_sync(
+        content, filename, request.session_id
+    )
+    
+    return UploadResponse(
+        success=True,
+        session_id=session_id,
+        filename=file_path.name,
+        file_size=len(content),
+        message=f"Notebook fetched from URL successfully"
     )
 
 

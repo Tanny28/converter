@@ -201,6 +201,99 @@ body {
     font-size: 0.875rem;
 }
 
+/* Upload Tabs */
+.upload-tabs {
+    display: flex;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-lg);
+    background: var(--color-gray-100);
+    padding: var(--spacing-xs);
+    border-radius: var(--radius-md);
+}
+
+.upload-tab {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: none;
+    background: transparent;
+    color: var(--color-gray-600);
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+    transition: var(--transition-fast);
+}
+
+.upload-tab:hover {
+    color: var(--color-gray-800);
+}
+
+.upload-tab.active {
+    background: white;
+    color: var(--color-primary);
+    box-shadow: var(--shadow-sm);
+}
+
+.upload-panel {
+    animation: fadeIn var(--transition-normal);
+}
+
+/* URL Input */
+.url-input-container {
+    padding: var(--spacing-xl);
+    background: var(--color-gray-50);
+    border: 2px dashed var(--color-gray-300);
+    border-radius: var(--radius-lg);
+    text-align: center;
+}
+
+.url-input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    background: white;
+    border: 1px solid var(--color-gray-300);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-xs) var(--spacing-xs) var(--spacing-xs) var(--spacing-md);
+    transition: var(--transition-fast);
+}
+
+.url-input-wrapper:focus-within {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.url-input-icon {
+    color: var(--color-gray-400);
+    flex-shrink: 0;
+}
+
+.url-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    color: var(--color-gray-800);
+    background: transparent;
+    min-width: 0;
+}
+
+.url-input::placeholder {
+    color: var(--color-gray-400);
+}
+
+.url-hint {
+    margin-top: var(--spacing-md);
+    color: var(--color-gray-500);
+    font-size: 0.8125rem;
+}
+
 /* File List */
 .file-list {
     margin-top: var(--spacing-lg);
