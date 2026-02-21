@@ -1,0 +1,13 @@
+{
+  "name": "notebook-formatter-frontend",
+  "version": "0.1.0",
+  "description": "Frontend for Smart Notebook Print Formatter",
+  "main": "src/index.html",
+  "scripts": {
+    "start": "npx serve src -p 3000",
+    "dev": "npx serve src -p 3000"
+  },
+  "devDependencies": {
+    "serve": "^14.2.0"
+  }
+}

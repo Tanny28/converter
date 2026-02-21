@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block extra_styles %}
+<style>
+    body {
+        font-family: "Fira Sans", "Segoe UI", sans-serif;
+        background: #fafafa;
+    }
+    
+    .code-cell {
+        background: #1e1e1e;
+        border-radius: 8px;
+    }
+    
+    .code-cell .highlight {
+        background: transparent;
+    }
+    
+    .output {
+        background: #2d2d2d;
+        color: #f0f0f0;
+        border-left-color: #4CAF50;
+    }
+    
+    figure {
+        background: white;
+        padding: 1rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+</style>
+{% endblock %}
